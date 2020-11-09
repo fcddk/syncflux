@@ -248,6 +248,7 @@ func GetFields(c client.Client, sdb string, meas string, rp string) map[string]*
 	if err != nil {
 		log.Printf("Fail to get response from database, get measurements error: %s\n", err.Error())
 	}
+	log.Debugf("get fields query[%s],db[%s],meas[%s]", cmd, sdb, meas)
 
 	res := response.Results
 

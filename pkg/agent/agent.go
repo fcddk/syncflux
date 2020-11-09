@@ -107,6 +107,7 @@ func initCluster(master string, slave string) *HACluster {
 					slaveAlive = false
 					log.Errorf("SlaveDB[%s] has  problems :%s", slave, err)
 				}
+				// cli = nil
 				SDB.SetCli(cli)
 			}
 

@@ -292,8 +292,9 @@ func main() {
 
 	switch action {
 	case "hamonitor":
-		agent.HAMonitorStart(master, slave)
 		webui.WebServer("", httpPort, &agent.MainConfig.HTTP, agent.MainConfig.General.InstanceID)
+		agent.HAMonitorStart(master, slave)
+		//webui.WebServer("", httpPort, &agent.MainConfig.HTTP, agent.MainConfig.General.InstanceID)
 	case "copy":
 		agent.Copy(master, slave, actiondb, newdb, actionrp, newrp, actionmeas, starttime, endtime, fulltime)
 	case "move":
