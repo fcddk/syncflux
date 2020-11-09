@@ -251,6 +251,7 @@ func GetFields(c client.Client, sdb string, meas string, rp string) map[string]*
 	log.Debugf("get fields query[%s],db[%s],meas[%s]", cmd, sdb, meas)
 
 	res := response.Results
+	log.Debugf("get fields from meas[%s], response:[%s]", meas, response.Results)
 
 	if len(res[0].Series) == 0 {
 		log.Warnf("The response for Query is null, get Fields from  DB %s Measurement %s error!\n", sdb, meas)
