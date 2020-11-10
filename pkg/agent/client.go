@@ -252,21 +252,23 @@ func GetFields(c client.Client, sdb string, meas string, rp string) map[string]*
 
 	res := response.Results
 	log.Debugf("get fields from meas[%s], response:[%s]", meas, response.Results)
+	if len(res) > 0 {
+		if len(res[0].Series) == 0 {
+			log.Warnf("The response for Query is null, get Fields from  DB %s Measurement %s error!\n", sdb, meas)
+		} else {
 
-	if len(res[0].Series) == 0 {
-		log.Warnf("The response for Query is null, get Fields from  DB %s Measurement %s error!\n", sdb, meas)
-	} else {
+			values := res[0].Series[0].Values
+			//show progress of getting measurements
+			for _, row := range values {
+				fieldname := row[0].(string)
+				fieldtype := row[1].(string)
+				fields[fieldname] = &FieldSch{Name: fieldname, Type: fieldtype}
+				log.Debugf("Detected Field [%s] type [%s] on measurement [%s]", fieldname, fieldtype, meas)
+			}
 
-		values := res[0].Series[0].Values
-		//show progress of getting measurements
-		for _, row := range values {
-			fieldname := row[0].(string)
-			fieldtype := row[1].(string)
-			fields[fieldname] = &FieldSch{Name: fieldname, Type: fieldtype}
-			log.Debugf("Detected Field [%s] type [%s] on measurement [%s]", fieldname, fieldtype, meas)
 		}
-
 	}
+
 	return fields
 }
 
